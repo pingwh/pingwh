@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			html,body{
+				height:100%;
+				overflow:hidden;
+			}
+			body{
+				background:#000;
+				text-align: center;
+			}
+			#c1{
+				background: #000;
+				background: url(img/game_bg_2_hd.jpg) no-repeat;
+			}
+		</style>
+		<script src="js/com.js"></script>
+		<script src="js/resource.js"></script>
+		<script src="js/fish.js"></script>
+		<script src="js/cannon.js"></script>
+		<script>
+			
+			document.addEventListener('DOMContentLoaded',function(){
+				var oC=document.getElementById('c1');
+				var gd=oC.getContext('2d');
+				loadImage(resource,function(){
+					//画炮
+					var c = new Cannon(7);
+					c.x=431;
+					c.y=570;
+					setInterval(function(){
+						gd.clearRect(0,0,oC.width,oC.height);
+						//画炮台
+						gd.drawImage(JSON['bottom'],
+							0,0,765,70,
+							0,oC.height-70,765,70
+						);
+						//画炮
+						c.draw(gd);
+					},30);
+					oC.onclick=function(ev){
+						var x=ev.clientX - oC.offsetLeft -c.x;
+						var y=c.y-(ev.clientY-oC.offsetTop);
+						var d=90-a2d(Math.atan2(y,x));
+						c.rotate=d;
+					}
+				
+					
+					
+				});
+			},false);
+		</script>
+	</head>
+	<body>
+		<canvas width="800" height="600" id="c1"></canvas>
+	</body>
+</html>

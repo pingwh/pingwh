@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title>Document</title>
+		<link type="text/css" rel="stylesheet" href="css/base.css" />
+		<link type="text/css" rel="stylesheet" href="css/index.css" />
+		<style type="text/css">
+			html,
+			body {
+				height: 100%;
+				overflow: hidden;
+			}
+			
+			body {
+				background: #000;
+			}
+			
+		</style>
+		<script>
+			function rnd(m, n) {
+				return parseInt(Math.random() * (n - m) + m);
+			}
+
+			function d2a(n) {
+				return n * Math.PI / 180;
+			}
+
+			document.addEventListener('DOMContentLoaded', function() {
+				var oC = document.querySelector('canvas');
+				var gd = oC.getContext('2d');
+
+				var winW = document.documentElement.clientWidth;
+				var winH = document.documentElement.clientHeight;
+
+				oC.width = winW;
+				oC.height = winH;
+
+				//存星星
+				var strArr = [];
+				var N = 500;
+				for(var i = 0; i < N; i++) {
+					strArr[i] = {
+						x: rnd(0, winW),
+						y: rnd(0, winH)
+					}
+				}
+
+				//会闪的星星;
+				var flicker = [];
+				var LEN = 50;
+				for(var i = 0; i < LEN; i++) {
+					flicker[i] = {
+						fx: rnd(0, winW),
+						fy: rnd(0, winH)
+					}
+				}
+
+				//流星
+				var meteor = [];
+				var num = 30;
+				for(var i = 0; i < num.length; i++) {
+					meteor[i] = {
+						mx: rnd(0, winW),
+						my: rnd(0, winH)
+					}
+				}
+
+				gd.clearRect(0, 0, oC.width, oC.height);
+				//画星星
+				for(var i = 0; i < strArr.length; i++) {
+					drawStr(strArr[i]);
+				}
+
+				function drawStr(p) {
+					var pW = 2;
+					var pH = 2;
+					gd.fillStyle = '#fff';
+					gd.fillRect(p.x - pW / 2, p.y - pH / 2, pW, pH);
+				}
+				//闪烁
+				var timer = null;
+				for(var i = 0; i < flicker.length; i++) {
+					drawflicker(flicker[i]);
+				}
+
+				function drawflicker(star) {
+					var W = 0;
+					var H = 0;
+					gd.filleStyle = '#fff';
+					timer = setInterval(function() {
+						W += 0.2;
+						H += 0.2;
+						gd.fillRect(star.fx - W / 2, star.fy - H / 2, W, H);
+						if(W >= 2) {
+							gd.clearRect(star.fx - W / 2, star.fy - H / 2, W, H);
+							W = 0;
+							H = 0;
+							gd.clearRect(0, 0, oC.width, oC.height);
+							for(var i = 0; i < strArr.length; i++) {
+								drawStr(strArr[i]);
+							}
+						}
+					}, 1000);
+				}
+				//画流星
+				for(var i = 0; i < meteor.length; i++) {
+					meteor[i].deaw(gd);
+				}
+			}, false);
+		</script>
+	</head>
+
+	<body>
+		<div id="box">
+			<div id="menu" class="menu">
+				<ul>
+					<li class="one"></li>
+					<li class="two"></li>
+					<li class="three"></li>
+				</ul>
+			</div>
+			<div id="bg1" style="display: block;">
+				<canvas></canvas>
+				<div class="intro-container">
+					<div class="slogan">
+						<div class="slogan-t clearfix">
+							<span class="fl">前&nbsp;端&nbsp;开&nbsp;发&nbsp;不&nbsp;仅&nbsp;仅&nbsp;是&nbsp;&nbsp;</span>
+							<p class="p1 fl">编程</p>
+						</div>
+						<div class="slogan-b clearfix">
+							<span class="fl">更是&nbsp;</span>
+							<p class="p2 fl">思想&nbsp;</p>
+							<span class="fl">与&nbsp;</span>
+							<p class="p3 fl">艺术&nbsp;</p>
+							<span class="fl">De&nbsp;</span>
+							<div class="fl">
+								<p class="fl p4">碰</p>
+								<p class="p5 fl">撞</p>
+							</div>
+						</div>
+					</div>
+					<!-- 点击进入部分 -->
+					<div class="button shift-camera-buttton">
+						<div class="border">
+							<div class="left-plane"></div>
+							<div class="right-plane"></div>
+						</div>
+						<div class="text">点击进入</div>
+					</div>
+				</div>
+			</div>
+			<div id="bg2" style="display: none; opacity: 0;">
+				<p class="name">平伟华</p>
+				<ul class="m-nav clearfix">
+					<li class="nav-1 fl">
+						<a href="code/move.html" target="_blank">
+							<ul>
+								<li>
+									<span>me</span>
+									<span class="Wsmall">关于我</span>
+								</li>
+							</ul>
+							<div class="Nmove"></div>
+
+							<em></em>
+							<img src="img/menuP2.jpg" alt="" />
+						</a>
+					</li>
+					<li class="nav-2 fl">
+						<a href="code/project.html" target="_blank">
+							<ul>
+								<li>
+									<span>items</span>
+									<span class="Wsmall">项目</span>
+								</li>
+							</ul>
+							<div class="Nmove"></div>
+							<em></em>
+							<img src="img/menuP1.jpg" alt="" />
+						</a>
+					</li>
+					<li class="nav-3 fl">
+						<a href="http://www.jianshu.com/u/63f04613153e" target="_blank">
+							<ul>
+								<li>
+									<span>blog</span>
+									<span class="Wsmall">博客</span>
+								</li>
+							</ul>
+							<div class="Nmove"></div>
+							<em></em>
+							<img src="img/menuP5.jpg" alt="" />
+						</a>
+					</li>
+					<li class="nav-4 fl">
+						<a href="code/contact.html" target="_blank">
+							<ul>
+								<li>
+									<span>contact</span>
+									<span class="Wsmall">联系</span>
+								</li>
+							</ul>
+							<div class="Nmove"></div>
+							<em></em>
+							<img src="img/menuP4.jpg" alt="" />
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+
+</html>
+<script src="js/jquery-1.7.2.js"></script>
+<script src="js/index.js"></script>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			html,body{
+				height:100%;
+				overflow:hidden;
+			}
+			body{
+				background:#000;
+				text-align: center;
+			}
+			#c1{
+				background: #000;
+				background: url(img/game_bg_2_hd.jpg) no-repeat;
+			}
+		</style>
+		<script src="js/com.js"></script>
+		<script src="js/resource.js"></script>
+		<script src="js/fish.js"></script>
+		<script src="js/cannon.js"></script>
+		<script>
+			//炮弹具体尺寸
+			var BULLET_SIZE=[
+				null,
+				{x: 86, y: 0, w: 24, h: 26},
+				{x: 62, y: 0, w: 25, h: 29},
+				{x: 30, y: 0, w: 31, h: 35},
+				{x: 32, y: 35, w: 27, h: 31},
+				{x: 30, y: 82, w: 29, h: 33},
+				{x: 0, y: 82, w: 30, h: 34},
+				{x: 0, y: 0, w: 30, h: 44}
+			];
+			function Bullet(type){
+				this.x = 0;
+				this.y = 0;
+				this.type = type;
+				this.rotate=0;
+				this.cur=0;
+				this.iSpeed = this.type*2;
+				this.move();
+			}
+			Bullet.prototype.draw=function(gd){
+				var x = BULLET_SIZE[this.type].x;
+				var y = BULLET_SIZE[this.type].y;
+				var w = BULLET_SIZE[this.type].w;
+				var h = BULLET_SIZE[this.type].h;
+				gd.save();
+				gd.translate(this.x,this.y);
+				gd.rotate(d2a(this.rotate));
+				gd.drawImage(JSON['bullet'],
+					x,y,w,h,
+					-w/2,-h/2,w,h
+				);
+				gd.restore();
+			};
+			Bullet.prototype.move=function(){
+				var _this = this;
+				//往前走
+				setInterval(function(){
+					_this.x+=Math.sin(d2a(_this.rotate))*_this.iSpeed;
+					_this.y-=Math.cos(d2a(_this.rotate))*_this.iSpeed;
+				},30);
+			};
+			
+			document.addEventListener('DOMContentLoaded',function(){
+				var oC=document.getElementById('c1');
+				var gd=oC.getContext('2d');
+				loadImage(resource,function(){
+					//存放所有生成的炮弹
+					var arrBullet = [];
+					//画炮
+					var c=new Cannon(7);
+					setInterval(function(){
+						gd.clearRect(0,0,oC.width,oC.height);
+						//画炮台
+						gd.drawImage(JSON['bottom'],
+							0,0,765,70,
+							0,oC.height-70,765,70
+						);
+						//画炮
+						c.draw(gd);
+						//画炮弹
+						for(var i=0; i<arrBullet.length; i++){
+							arrBullet[i].draw(gd);
+						}
+					},30);
+					
+					//点击
+					oC.onclick=function(ev){
+						//角度
+						var x=ev.clientX-c.x-oC.offsetLeft;
+						var y=c.y-(ev.clientY - oC.offsetTop);
+						var d = 90 - a2d(Math.atan2(y,x));
+						c.rotate = d;
+						//发射状态
+						c.emitChange();
+						//造炮弹
+						var bullet = new Bullet(c.type);
+						bullet.x=c.x;
+						bullet.y=c.y;
+						bullet.rotate=c.rotate;
+						arrBullet.push(bullet);
+					};
+				});
+			},false);
+		</script>
+	</head>
+	<body>
+		<canvas width="800" height="600" id="c1"></canvas>
+	</body>
+</html>

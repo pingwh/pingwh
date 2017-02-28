@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/base.css" />
+		<link rel="stylesheet" type="text/css" href="../css/move.css" />
+	</head>
+
+	<body data-rendering="true">
+		<div id="main" class="main">
+			<div class="step common first" data-x="-1000" data-y="-1500">
+				<div>
+					<p>姓名:平伟华</p>
+					<p>学历:可怜的大专</p>
+					<p>学校:黑龙江职业学院</p>
+				</div>
+			</div>
+			<div class="step common" data-x="0" data-y="-1500">
+				<h2 style="margin-top: 70px;">自我介绍：</h2>
+				<q class="q" style="font-size: 20px; margin-top: 40px">
+   					一个擅长DW、webStorm、HBuilder等软件的安装与卸载，精通CSS、JavaScript、PHP、Jquery、angularjs、nodejs等单词的拼写，熟悉Windows、Linux、Mac、Android、IOS、WP8等系统的开关机的前端工程师
+   				</q>
+			</div>
+			<div id="title" class="step third" data-x="0" data-y="0" data-scale="4">
+				<ul class="clearfix">
+					<li class="fl"><img src="../img/2jpg.jpg" alt="" width="500" height="400" /></li>
+					<li class="fl"><img src="../img/3.jpg" alt="" width="500" height="400" /></li>
+					<li class="fl"><img src="../img/4.jpg" alt="" width="500" height="400" /></li>
+					<li class="fl"><img src="../img/5.jpg" alt="" width="500" height="400" /></li>
+					<li class="fl"><img src="../img/6.jpg" alt="" width="500" height="400" /></li>
+					<li class="fl"><img src="../img/2jpg.jpg" alt="" width="500" height="400" /></li>
+					<li class="fl"><img src="../img/3.jpg" alt="" width="500" height="400" /></li>
+					<li class="fl"><img src="../img/4.jpg" alt="" width="500" height="400" /></li>
+				</ul>
+				<span>回不去的学生时代</span>
+			</div>
+			<div id="its" class="step"  data-x="850" data-y="3000" data-rotate="90" data-scale="5">
+				<p>2016年1月<br> 哈尔滨金折科技发展有限公司
+					<br> 我的第一家公司，这是一家外包公司。
+				</p>
+			</div>
+			<div id="ing" class="step" data-x="3500" data-y="-850" data-rotate="270" data-scale="6">
+				<p>在此期间，参与过<b class="rotating">学派网</b>和<b class="scaling">owo次元</b>等一系列项目</p>
+			</div>
+			<div id="big" class="step" data-x="3500" data-y="2100" data-rotate="180" data-scale="6">
+				<p><span>来到北京后，除了代码的陪伴还有这东西↓</span><br /><b>雾霾</b><br /><span>知道毒死你用英语怎么说的嘛</span></p>
+			</div>
+			<div id="tiny" class="step" data-x="2825" data-y="2325" data-z="-600" data-rotate="300" data-scale="1">
+				<p>welcom <b>to</b> Beijing</p>
+			</div>
+			<div id="skill" class="step" data-x="6700" data-y="-300" data-scale="6">
+				<p>深入理解原生JS，精通PC端、移动端布局与设备适配，能够独立完成页面效果以及数据交互操作，能解决垮浏览器及兼容问题。精通面向对象思想，W3C标准、熟悉MVC思想。熟练使用前端主流框架。了解Nodejs，可实现简单的数据接口、</p>
+			</div>
+			<div id="source" class="step" data-x="6300" data-y="2000" data-rotate="20" data-scale="4">
+				<p>一入前端深似海，从此学习为基友</p>
+			</div>
+			<div id="no" class="step" data-x="6000" data-y="4000" data-scale="2">
+				<p>我不知道生活的意义是什么</p>
+			</div>
+			<div id="go" class="step" data-x="6200" data-y="4300" data-z="-100" data-rotate-x="-40" data-rotate-y="10" data-scale="2">
+				<p>但我知道生活的方向永远都是大步向前，永不回头！</p>
+			</div>
+			<div id="overview" class="step" data-x="3000" data-y="1500" data-scale="10"></div>
+		</div>
+		<div class="look" style="position: fixed; top: 10px; left: 50%; margin-left: -50px;">
+			请用键盘上的 space 键。<br />
+		</div>
+	</body>
+
+</html>
+<script src="../js/move.js"></script>
+<!--<script>
+	document.addEventListener('DOMContentLoaded',function(){
+		var oT=document.getElementById('title');
+		var oUl=oT.getElementsByTagName('ul')[0];
+		var Num=0;
+		var timer=null;
+		clearInterval(timer)
+		timer=setInterval(function(){			
+			Num+=5;
+			if(Num>=2500){
+				Num=0;
+			}
+			oUl.style.transform='translateX(-'+Num+'px)';
+			
+			console.log(Num)
+		},30)
+	},false)
+</script>-->

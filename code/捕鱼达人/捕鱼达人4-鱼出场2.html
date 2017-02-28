@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			html,body{
+				height:100%;
+				overflow:hidden;
+			}
+			body{
+				background:#000;
+				text-align: center;
+			}
+			#c1{
+				background: #000;
+				background: url(img/game_bg_2_hd.jpg) no-repeat;
+			}
+		</style>
+		<script src="js/com.js"></script>
+		<script src="js/resource.js"></script>
+		<script>
+			var FISH_SIZE=[
+				null,
+				{w: 55, h: 37},
+				{w: 78, h: 64},
+				{w: 72, h: 56},
+				{w: 77, h: 59},
+				{w: 107, h: 122}
+			];
+			function Fish(type){
+				this.x=0;
+				this.y=0;
+				this.rotate=0;
+				this.type=type;
+				this.cur=0;
+				this.iSpeed=1;
+				this.move();
+				
+			}
+			Fish.prototype.draw=function(gd){
+				//这条鱼的宽高
+				var w =FISH_SIZE[this.type].w;
+				var h =FISH_SIZE[this.type].h;
+				gd.save();
+				gd.translate(this.x,this.y);
+				gd.rotate(d2a(this.rotate));
+				if (this.rotate>90&this.rotate<270) {
+					gd.scale(-1,1);
+				}
+				gd.drawImage(JSON['fish'+this.type],
+					0,this.cur*h,w,h,
+					-w/2,-h/2,w,h
+				);
+				gd.restore();
+			};
+			Fish.prototype.move=function(){
+				var _this=this
+				//向前游
+				setInterval(function(){
+					_this.x+=Math.cos(d2a(_this.rotate))*_this.iSpeed;
+					_this.y+=Math.cos(d2a(_this.rotate))*_this.iSpeed;
+				},30);
+				//鱼摆尾
+				setInterval(function(){
+					_this.cur++;
+					if(_this.cur==4){
+						_this.cur=0;
+					}
+				},220);
+			};
+			document.addEventListener('DOMContentLoaded',function(){
+				var oC=document.getElementById('c1');
+				var gd=oC.getContext('2d');
+				loadImage(resource,function(){
+					//资源加载完成
+					var f1 = new Fish(5);
+					f1.x=100;
+					f1.y=100;
+					f1.rotate=45;
+					setInterval(function(){
+						gd.clearRect(0,0,oC.width,oC.height);
+						f1.draw(gd);
+					},16);
+					
+					
+				});
+			},false);
+		</script>
+	</head>
+	<body>
+		<canvas width="800" height="600" id="c1"></canvas>
+	</body>
+</html>

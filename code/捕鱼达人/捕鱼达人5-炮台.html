@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			html,body{
+				height:100%;
+				overflow:hidden;
+			}
+			body{
+				background:#000;
+				text-align: center;
+			}
+			#c1{
+				background: #000;
+				background: url(img/game_bg_2_hd.jpg) no-repeat;
+			}
+		</style>
+		<script src="js/com.js"></script>
+		<script src="js/resource.js"></script>
+		<script src="js/fish.js"></script>
+		<script>
+			
+			document.addEventListener('DOMContentLoaded',function(){
+				var oC=document.getElementById('c1');
+				var gd=oC.getContext('2d');
+				loadImage(resource,function(){
+					//资源加载完成
+					//画炮台
+					gd.drawImage(JSON['bottom'],
+						0,0,765,70,
+						0,oC.height-70,765,70
+					);
+				
+					
+					
+				});
+			},false);
+		</script>
+	</head>
+	<body>
+		<canvas width="800" height="600" id="c1"></canvas>
+	</body>
+</html>

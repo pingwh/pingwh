@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			html,body{
+				height:100%;
+				overflow:hidden;
+			}
+			body{
+				background:#000;
+				text-align: center;
+			}
+			#c1{
+				background: #000;
+				background: url(img/game_bg_2_hd.jpg) no-repeat;
+			}
+		</style>
+		<script src="js/com.js"></script>
+		<script src="js/resource.js"></script>
+		<script>
+			
+			document.addEventListener('DOMContentLoaded',function(){
+				var oC=document.getElementById('c1');
+				var gd=oC.getContext('2d');
+				loadImage(resource,function(){
+					gd.drawImage(JSON['fish3'],0,0);
+				});
+			},false);
+		</script>
+	</head>
+	<body>
+		<canvas width="800" height="600" id="c1"></canvas>
+	</body>
+</html>

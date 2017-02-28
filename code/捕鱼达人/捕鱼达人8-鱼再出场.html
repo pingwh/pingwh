@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			html,body{
+				height:100%;
+				overflow:hidden;
+			}
+			body{
+				background:#000;
+				text-align: center;
+			}
+			#c1{
+				background: #000;
+				background: url(img/game_bg_2_hd.jpg) no-repeat;
+			}
+		</style>
+		<script src="js/com.js"></script>
+		<script src="js/resource.js"></script>
+		<script src="js/fish.js"></script>
+		<script src="js/cannon.js"></script>
+		<script type="text/javascript" src="js/bullet.js"></script>
+		<script>
+			
+			document.addEventListener('DOMContentLoaded',function(){
+				var oC=document.getElementById('c1');
+				var gd=oC.getContext('2d');
+				var out=50;
+				loadImage(resource,function(){
+					//存放所有生成的炮弹
+					var arrBullet = [];
+					//存鱼
+					var arrFish = [];
+					//画炮
+					var c=new Cannon(7);
+					setInterval(function(){
+						gd.clearRect(0,0,oC.width,oC.height);
+						//画炮台
+						gd.drawImage(JSON['bottom'],
+							0,0,765,70,
+							0,oC.height-70,765,70
+						);
+						//画炮
+						c.draw(gd);
+						//画炮弹
+						for(var i=0; i<arrBullet.length; i++){
+							arrBullet[i].draw(gd);
+						}
+						//炮弹性能优化
+						for(var i=0; i<arrBullet.length; i++){
+							if(arrBullet[i].x+out<0||arrBullet[i].x>oC.width+out||arrBullet[i].y+out<0||arrBullet[i].y>oC.height+out){
+								arrBullet.splice(i,1);
+								i--;
+							}
+						}
+
+						//画鱼
+						if(Math.random()<0.04){
+							//生成鱼
+							var f1 = new Fish(rnd(1,6));
+							f1.x = oC.width+out;
+							f1.y = rnd(out,oC.height-out);
+							f1.rotate = rnd(135,225);
+							arrFish.push(f1);
+
+						}
+
+						for(var i=0; i<arrFish.length; i++){
+							arrFish[i].draw(gd);
+
+						}
+					},30);
+					
+					//点击
+					oC.onclick=function(ev){
+						//角度
+						var x=ev.clientX-c.x-oC.offsetLeft;
+						var y=c.y-(ev.clientY - oC.offsetTop);
+						var d = 90 - a2d(Math.atan2(y,x));
+						c.rotate = d;
+						//发射状态
+						c.emitChange();
+						//造炮弹
+						var bullet = new Bullet(c.type);
+						bullet.x=c.x;
+						bullet.y=c.y;
+						bullet.rotate=c.rotate;
+						arrBullet.push(bullet);
+					};
+				});
+			},false);
+		</script>
+	</head>
+	<body>
+		<canvas width="800" height="600" id="c1"></canvas>
+	</body>
+</html>

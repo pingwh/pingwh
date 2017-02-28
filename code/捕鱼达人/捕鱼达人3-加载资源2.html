@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			html,body{
+				height:100%;
+				overflow:hidden;
+			}
+			body{
+				background:#000;
+				text-align: center;
+			}
+			#c1{
+				background: #000;
+				background: url(img/game_bg_2_hd.jpg) no-repeat;
+			}
+		</style>
+		<script>
+			var JSON={};//{'fish1':oImg1,'fish2':oImg2,'fish3':oImg3}
+			function loadImage(arr,fnSucc){
+				var count=0;
+				for(var i=0; i<arr.length; i++){
+					var oImg=new Image();
+						//循环里面加事件，事件里的i不能用
+					(function(index){
+						oImg.onload=function(){
+						//当前这个oImg;
+						JSON[arr[index]] = this;
+						count++;
+						if(count==arr.length){
+							fnSucc&&fnSucc();
+						}
+					};
+					})(i);
+					oImg.src='img/'+arr[i]+'.png';
+				}
+			}
+			document.addEventListener('DOMContentLoaded',function(){
+				var oC=document.getElementById('c1');
+				var gd=oC.getContext('2d');
+				loadImage(['fish1','fish2','fish3','fish4','fish5'],function(){
+					gd.drawImage(JSON['fish3'],0,0);
+				});
+			},false);
+		</script>
+	</head>
+	<body>
+		<canvas width="800" height="600" id="c1"></canvas>
+	</body>
+</html>
